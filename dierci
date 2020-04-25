@@ -1,0 +1,242 @@
+#include <iostream>
+#include <cstdio>
+#include<fstream>
+#include<string.h>
+#include <cstdlib>
+#include <time.h>
+#include<iomanip>
+using namespace std;
+struct data
+{
+    int num[1000];
+    float num1[1000];
+}p[1000];
+
+void Have(int NUM,int Max,int Num,int wenjian,char yunsuanfu[],int decimal)       //带括号
+{
+    int flag1=0,flag2=0;
+    int k1,k2,op,i,j,len;
+    len=strlen(yunsuanfu);
+    ofstream outfile;
+    outfile.open("D:\\a.txt");
+    for(i=0;i<NUM;i++)
+    {
+        k1=-1;
+        k2=-1;
+        while(1)
+        {
+            if(k1>k2||k2-k1<2||k2>Num)
+            {
+                k1=int(rand()%(Num-1));
+                k2=int(rand()%(Num-1));
+            }
+            else
+                break;
+        }
+        for(j=0;j<Num;j++)
+        {
+            op=int(rand()%len);
+            if(decimal==1)
+            {
+                p[i].num[j]=rand()%Max+1;
+                p[i].num[j+1]=rand()%Max+1;
+            }
+            if(decimal==0)
+            {
+                p[i].num1[j]=rand()%Max*0.3;
+                p[i].num1[j+1]=rand()%Max*0.7;
+            }
+            if(j<Num-1)
+            {
+                if(j==k1)
+                {
+        if(decimal==1)
+    {
+        cout<<"("<<p[i].num[j]<<" "<<yunsuanfu[op]<<" ";
+            flag1=1;
+            if(wenjian==1)
+        outfile<<"("<<p[i].num[j]<<" "<<yunsuanfu[op]<<" ";
+    }
+      else
+    {
+        cout<<"("<<setprecision(1)<<std::fixed<<p[i].num1[j]<<" "<<yunsuanfu[op]<<" ";
+          flag1=1;
+      if(wenjian==1)
+    outfile<<"("<<setprecision(1)<<std::fixed<<p[i].num1[j]<<" "<<yunsuanfu[op]<<" ";
+    }
+    }
+       else if(j==k2)
+{
+    if(decimal==1)
+    {
+        cout<<p[i].num[j]<<")"<<" "<<yunsuanfu[op]<<" ";
+        flag2=1;
+            if(wenjian==1)
+         outfile<<p[i].num[j]<<")"<<" "<<yunsuanfu[op]<<" ";
+    }
+    else
+    {
+        cout<<setprecision(1)<<std::fixed<<p[i].num1[j]<<")"<<" "<<yunsuanfu[op]<<" ";
+        flag2=1;
+        if(wenjian==1)
+    outfile<<setprecision(1)<<std::fixed<<p[i].num1[j]<<")"<<" "<<yunsuanfu[op]<<" ";
+                    }
+                }
+    else
+        {
+        if(decimal==1)
+        {
+        cout<<p[i].num[j]<<" "<<yunsuanfu[op]<<" ";
+        if(wenjian==1)
+        outfile<<p[i].num[j]<<" "<<yunsuanfu[op]<<" ";
+     }
+    else
+                    {
+    cout<<setprecision(1)<<std::fixed<<p[i].num1[j]<<" "<<yunsuanfu[op]<<" ";
+        if(wenjian==1)
+    outfile<<setprecision(1)<<std::fixed<<p[i].num1[j]<<" "<<yunsuanfu[op]<<" ";
+                    }
+                }
+            }
+            else
+            {
+       if(flag1==1&&flag2==0)
+        {
+        if(decimal==1)
+            {
+        cout<<p[i].num[j]<<")"<<" ";
+        if(wenjian==1)
+        outfile<<p[i].num[j]<<")"<<" ";
+            }
+        else
+            {
+        cout<<setprecision(1)<<std::fixed<<p[i].num1[j]<<')';
+    if(wenjian==1)
+        outfile<<setprecision(1)<<std::fixed<<p[i].num1[j]<<')';
+            }
+          }
+  else
+       {
+    if(decimal==1)
+       {
+        cout<<p[i].num[j]<<" ";
+        if(wenjian==1)
+        outfile<<p[i].num[j]<<" ";
+        }
+    else
+    {
+      cout<<setprecision(1)<<std::fixed<<p[i].num1[j];
+        if(wenjian==1)
+        outfile<<setprecision(1)<<std::fixed<<p[i].num1[j];
+    }
+           }
+         }
+        }
+       cout<<"= "<<"\n";
+       if(wenjian==1)
+            outfile<<"= "<<"\n";
+    }
+    outfile.close();
+}
+
+void No(int NUM,int Max,int Num,int wenjian,char yunsuanfu[],int decimal)      //无括号
+{
+    int i,j,len,op;
+    len=strlen(yunsuanfu);
+
+    ofstream outfile;
+    outfile.open("D:\\a.txt");
+    for(i=0;i<NUM;i++)
+    {
+        for(j=0;j<Num;j++)
+        {
+            op=int(rand()%len);
+            if(decimal==1)
+            {
+                p[i].num[j]=rand()%Max+1;
+                p[i].num[j+1]=rand()%Max+1;
+            }
+            if(decimal==0)
+            {
+                p[i].num1[j]=rand()%Max*0.3;
+                p[i].num1[j+1]=rand()%Max*0.7;
+            }
+            if(j<Num-1)
+            {
+      if(decimal==1)
+                {
+     cout<<p[i].num[j]<<" "<<yunsuanfu[op]<<" ";
+        if(wenjian==1)
+        outfile<<p[i].num[j]<<" "<<yunsuanfu[op]<<" ";
+                }
+        else
+                {
+    cout<<setprecision(1)<<std::fixed<<p[i].num1[j]<<" "<<yunsuanfu[op]<<" ";
+        if(wenjian==1)
+    outfile<<setprecision(1)<<std::fixed<<p[i].num1[j]<<" "<<yunsuanfu[op]<<" ";}}
+            if(j==Num-1)
+            {
+    if(decimal==1)
+      {
+     cout<<p[i].num[j]<<" ";
+      if(wenjian==1)
+      outfile<<p[i].num[j]<<" ";
+       }
+    else
+             {
+    cout<<setprecision(1)<<std::fixed<<p[i].num1[j];
+    if(wenjian==1)
+    outfile<<setprecision(1)<<std::fixed<<p[i].num1[j];
+                }
+            }
+    }
+        cout<<"= "<<"\n";
+        if(wenjian==1)
+            outfile<<"= "<<"\n";
+            }
+    outfile.close();
+}
+int main()
+{
+	int NUM,Num,Max;
+	int kuohao,wenjian,decimal;
+	char yunsuanfu[5];
+	cout<<"----------------------------------------------------------\n";
+	cout<<"请输入共有多少组运算表达式：";
+	cin>>NUM;
+  
+	cout<<"----------------------------------------------------------\n";
+	cout<<"请输入运算数的最大值: ";
+	cin>>Max;
+	cout<<"----------------------------------------------------------\n";
+	cout<<"请输入有无括号（1代表有括号、0代表无括号）: ";
+	cin>>kuohao;
+	cout<<"----------------------------------------------------------\n";
+	cout<<"请选择是否将结果存到文件中（1代表存放、0代表不存放）: ";
+	cin>>wenjian;
+	cout<<"----------------------------------------------------------\n";
+	cout<<"请选择是小数还是整数（1代表整数、0代表小数）：";
+    cin>>decimal;
+    cout<<"----------------------------------------------------------\n";
+    cout<<"请输入的运算符：";
+	cin>>yunsuanfu;
+	cout<<"----------------------------------------------------------\n";
+    Num=-1;
+    while(1)
+    {
+        if(Num<2||Num>8)
+            Num=int(rand()%10);      //定义每个表达式有多少个参与运算的实数
+        else
+            break;
+    }
+	if(kuohao==1)
+    {
+        Have(NUM,Max,Num,wenjian,yunsuanfu,decimal);
+    }
+    else if(kuohao==0)
+      {
+         No(NUM,Max,Num,wenjian,yunsuanfu,decimal);
+         }
+	system("pause");
+	return 0;
+}
