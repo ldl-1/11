@@ -1,0 +1,67 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <io.h>
+#include <string>
+#include <Windows.h>
+#include <fstream>
+#include <stdio.h>
+#include <sys/stat.h>
+#include <ctime>
+
+using namespace std;
+
+ofstream  g_ofStream( "c:/test.txt", ios::out );
+INT g_iSum = 0;
+
+void
+dfs( 
+	IN  string		        strPath
+	)
+{
+	_finddata_t file = { 0 };
+	string strPath1 = strPath + "/*.*";
+	INT iHandle =  _findfirst( strPath1.c_str(), &file );
+
+	if( -1 == iHandle )
+	{
+		cout << "error";
+	}
+	else
+	{
+		do{
+			if( (0 == strcmp(file.name, ".")) ||
+			    (0 == strcmp(file.name, "..")) )
+			{
+				continue;
+			}
+
+			if( file.attrib & _A_SUBDIR )
+			{
+				dfs( strPath + '/' + file.name );
+			}
+			else
+			{
+				cout << file.name << " " << ctime( &file.time_create ) << " " << ctime( &file.time_write ) << " " << file.size<< endl;
+				g_ofStream << file.name << " " << ctime( &file.time_create ) << " " << ctime ( &file.time_write ) << " " << file.size << endl;
+				g_iSum++;
+			}
+		} while( !_findnext( iHandle, &file ) );
+
+		_findclose( iHandle );
+	}
+}
+
+int main()
+{    
+	if( Wow64EnableWow64FsRedirection( FALSE ) )
+	{
+		dfs( "C:/Windows/System32" );
+		cout << g_iSum << endl;
+	}
+	 Wow64EnableWow64FsRedirection( TRUE );
+
+	 g_ofStream.close();
+	 system("pause");
+
+	 return 0;
+}
